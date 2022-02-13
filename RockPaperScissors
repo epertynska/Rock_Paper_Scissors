@@ -1,0 +1,33 @@
+import random
+
+print("This is Rock, Paper and Scissors game.")
+print("Everytime you win you gain 100 points, when there's a draw, you receive 50 points, and if you loose, your rating doesn't change.")
+print("If you want to check your current score, type \"!rating\", if you want to finish the game, type \"!exit\".")
+name = input("Enter your name: ")
+print("Hello,", name)
+rating = 0
+
+while True:
+    player = input("What's your move? (rock/paper/scissors)\n")
+    possible_options = ("scissors", "paper", "rock")
+    defends = {"scissors": "rock", "paper": "scissors", "rock": "paper"}
+    computer = random.choice(possible_options)
+    if player in possible_options:
+        if computer == defends[player]:
+            print("Sorry, but the computer chose {}".format(computer))
+        elif player == defends[computer]:
+            rating += 100
+            print("Well done. The computer chose {} and failed".format(computer))
+        elif player == computer:
+            rating += 50
+            print("There is a draw ({})".format(computer))
+    elif player == "!exit":
+        print("Your score has been saved on the score list.")
+        print("Bye!")
+        with open("rating.txt", "a") as f:
+            print(name, rating, file=f)
+        break
+    elif player == "!rating":
+        print("Your rating:", rating)
+    else:
+        print("Invalid input")
